@@ -41,7 +41,12 @@ if ($result) {
         <div class="sidebar-menus">
             <a href="#"><ion-icon name="storefront-outline"></ion-icon>Home</a>
             <a href="contact.php"><ion-icon name="chatbubbles-outline"></ion-icon>Contact Us</a>
-            <a href="#"><ion-icon name="settings-outline"></ion-icon>Settings</a>
+            <a href="account.php"><ion-icon name="settings-outline"></ion-icon>Settings</a>
+            <?php 
+            if ($_SESSION['is_admin'] == 1) {
+                echo "<a href='usersList.php'>User List</a>";
+                }
+            ?>
         </div>
         <div class="sidebar-logout">
             <a href="utils/logout.php"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
@@ -62,7 +67,6 @@ if ($result) {
             <div class="profile">
                 <a class="cart" href="#" onclick="toggleCartPopup()">
                     <ion-icon name="cart-outline"></ion-icon>
-                    <span class="cart-count" id="cart-count">0</span>
                 </a>
                 <a class="user" href="login.php"><ion-icon name="person-outline"></ion-icon></a>
                 <div class="top">
@@ -91,6 +95,7 @@ if ($result) {
             </table>
             <p>Total($)<span id="cart-total">0.00</span></p>
             <a class="cart-close" onclick="closeCart()"><ion-icon name="close-circle"></ion-icon></a>
+            <button class="checkout-button" onclick="redirectToCheckout()">Checkout</button>
         </div>
 
 
@@ -278,6 +283,7 @@ if ($result) {
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="app.js"></script> 
+<script src="debug.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </html>

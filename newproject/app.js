@@ -67,79 +67,103 @@ function closeCart(){
 
 //for add to cart button
 
-function addToCart(itemName,itemPrice){
-    const cartItems= document.getElementById('cart-items').getElementsByTagName('tbody')[0];
-    const existingItem=Array.from(cartItems.getElementsByTagName('tr')).find(item=>item.cells[0].textContent==itemName);
-    if(existingItem){
-        const itemCount=parseInt(existingItem.querySelector('.item-count').textContent) + 1;
-        existingItem.querySelector('.item-count').textContent=itemCount;
+function addToCart(itemName, price) {
+    const cartItems = document.getElementById('cart-items').getElementsByTagName('tbody')[0];
 
-        const itemTotal=parseFloat(existingItem.querySelector('.item-total').textContent)+parseFloat(itemPrice);
-        existingItem.querySelector('.item-total').textContent=itemTotal.toFixed(2);
+    // Проверяем, есть ли товар в корзине
+    const existingRow = Array.from(cartItems.getElementsByTagName('tr')).find(row => {
+        return row.querySelector('.item-name').textContent === itemName;
+    });
 
-    }
-    else{
-        const newRow=cartItems.insertRow();
-        newRow.innerHTML= `
-        <td>${itemName}</td>
-        <td class='item-count'>1</td>
-        <td class='item-price'>${itemPrice}</td>
-        <td class='item-total'>${itemPrice}</td>
+    if (existingRow) {
+        // Если товар уже в корзине, увеличиваем количество
+        const countElement = existingRow.querySelector('.item-count');
+        countElement.textContent = parseInt(countElement.textContent) + 1;
+        updateRowTotal(existingRow, price);
+    } else {
+        // Добавляем новый товар в корзину
+        const newRow = `
+            <tr>
+                <td class="item-name">${itemName}</td>
+                <td>
+                    <button class="decrease-qty">-</button>
+                    <span class="item-count">1</span>
+                    <button class="increase-qty">+</button>
+                </td>
+                <td class="item-price">${price.toFixed(2)}</td>
+                <td class="item-total">${price.toFixed(2)}</td>
+            </tr>
         `;
+        cartItems.insertAdjacentHTML('beforeend', newRow);
     }
-    updateCartCountAndTotal();
+
+    updateCartTotal();
 }
+
+function updateRowTotal(row, price) {
+    const count = parseInt(row.querySelector('.item-count').textContent);
+    const totalElement = row.querySelector('.item-total');
+    totalElement.textContent = (count * price).toFixed(2);
+    updateCartTotal();
+}
+
+function updateCartTotal() {
+    let totalSum = 0;
+    document.querySelectorAll('.item-total').forEach(el => {
+        totalSum += parseFloat(el.textContent);
+    });
+    document.getElementById('cart-total').textContent = totalSum.toFixed(2);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Это слушатель кликов на всех элементах корзины
+    document.getElementById('cart-items').addEventListener('click', function(event) {
+        const target = event.target;
+
+        // Проверяем, была ли нажата кнопка "increase-qty"
+        if (target.classList.contains('increase-qty')) {
+            handleQuantityChange(target, 1);
+        }
+        // Проверяем, была ли нажата кнопка "decrease-qty"
+        else if (target.classList.contains('decrease-qty')) {
+            handleQuantityChange(target, -1);
+        }
+    });
+});
+
+
+function handleQuantityChange(button, change) {
+    const row = button.closest('tr'); // Находим родительскую строку
+    const countElement = row.querySelector('.item-count'); // Элемент количества
+    const price = parseFloat(row.querySelector('.item-price').textContent); // Цена товара
+    let currentCount = parseInt(countElement.textContent) + change;
+
+    if (currentCount > 0) {
+        countElement.textContent = currentCount; // Обновляем количество
+        row.querySelector('.item-total').textContent = (price * currentCount).toFixed(2); // Обновляем стоимость
+    } else {
+        row.remove(); // Удаляем строку, если количество 0
+    }
+
+    updateCartTotal(); // Обновляем итоговую сумму корзины
+}
+
+
 
 //update cart count and total
-function updateCartCountAndTotal(){
-    const cartCount=document.getElementById('cart-count');
-    const cartTotal=document.getElementById('cart-total');
-    const cartItems=document.querySelectorAll('#cart-items tbody tr');
-    let totalCount=0;
-    let total=0;
-    cartItems.forEach(item=>{
-        const itemCount=parseInt(item.querySelector('.item-count').textContent);
-        const itemTotal=parseFloat(item.querySelector('.item-total').textContent);
-        totalCount+=itemCount;
-        total+=itemTotal;
-    });
-    cartCount.textContent=totalCount;
-    cartTotal.textContent=total.toFixed(2);
-}
+// function updateCartCountAndTotal() {
+//     const cartItems = document.getElementById('cart-items').getElementsByTagName('tbody')[0];
+//     let totalSum = 0;
 
-function renderCartItems() {
-    const cartItemsElement = $('#cart-items tbody');
-    const cart = getCartItems(); // Assuming this is the function you use to get cart items
+//     Array.from(cartItems.getElementsByTagName('tr')).forEach(row => {
+//         const total = parseFloat(row.querySelector('.item-total').textContent);
+//         totalSum += total;
+//     });
 
-    // clear the cart items
-    cartItemsElement.empty();
+//     document.getElementById('cart-total').textContent = totalSum.toFixed(2);
+// }
 
-    if (cart.length == 0) {
-        cartItemsElement.html(`
-        <div class="cart-empty">
-            <p>Your Cart is Empty</p>
-        </div>
-        `);
-    } else {
-        cart.forEach(function (item) {
-            const cartItemElement = $('<div class="cart-item"></div>');
-            cartItemElement.html(`
-                <div class="cart-item-desc">
-                    <div class="cart-item-title">${item.name}</div>
-                    <div class="cart-item-quantity">
-                        <button class="change-quantity" data-id="${item.id}" data-action="decrement">-</button>
-                        <span class="quantity">${item.quantity}</span>
-                        <button class="change-quantity" data-id="${item.id}" data-action="increment">+</button>
-                    </div>
-                </div>
-                <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
-                <button class="cart-item-remove" data-id="${item.id}"><i class="fa solid fa-trash"></i></button>
-            `);
-            cartItemsElement.append(cartItemElement);
-        });
-    }
-    updateCartCountAndTotal();
-}
+
 
 //поиск
 function searchMenu() {
@@ -155,5 +179,14 @@ function searchMenu() {
             item.style.display = "none"; // Скрываем элемент
         }
     });
+}
+
+function redirectToCheckout() {
+    const cartItems = document.getElementById('cart-items').getElementsByTagName('tbody')[0];
+    if (cartItems && cartItems.getElementsByTagName('tr').length > 0) {
+        window.location.href = 'checkout.php';
+    } else {
+        alert('Your cart is empty. Please add items to the cart before proceeding to checkout.');
+    }
 }
 

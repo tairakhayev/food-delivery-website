@@ -1,0 +1,137 @@
+:root {
+    --primaryColor: #0e6253;
+    --secondaryColor: #ffc107;
+    --whiteColor: #ffffff;
+    --blackColor: #222222;
+    --softGreyColor: #d9f2ee;
+    --darkGreyColor: #a7a7a7;
+    --greyColor: #f5f5f5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    background-color: var(--greyColor);
+    color: var(--blackColor);
+}
+
+main {
+    width: 80%;
+    max-width: 1200px;
+    margin-top: 30px;
+    background-color: var(--whiteColor);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.main-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.top h2 {
+    font-size: 1.5rem;
+    color: var(--primaryColor);
+}
+
+.top p {
+    font-size: 1rem;
+    color: var(--darkGreyColor);
+}
+
+.bottom {
+    background-color: var(--softGreyColor);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    font-size: 1rem;
+}
+
+table th {
+    background-color: var(--primaryColor);
+    color: var(--whiteColor);
+}
+
+table tr:nth-child(even) {
+    background-color: var(--greyColor);
+}
+
+table tr:hover {
+    background-color: var(--softGreyColor);
+}
+
+.table-btn {
+    padding: 8px 16px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.table-btn:hover {
+    background-color: var(--primaryColor);
+    color: var(--whiteColor);
+}
+
+.table-btn:first-child {
+    background-color: #ff4c4c;
+    color: var(--whiteColor);
+}
+
+.table-btn:first-child:hover {
+    background-color: #d02b2b;
+}
+
+.table-btn:last-child {
+    background-color: var(--secondaryColor);
+    color: var(--blackColor);
+}
+
+.table-btn:last-child:hover {
+    background-color: #e0a800;
+}
+
+.btn {
+    background-color: var(--primaryColor);
+    color: var(--whiteColor);
+    padding: 12px 25px;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: var(--secondaryColor);
+    color: var(--blackColor);
+}
