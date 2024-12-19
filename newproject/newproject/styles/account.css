@@ -1,0 +1,128 @@
+:root {
+    --primaryColor: #0e6253;
+    --secondaryColor: #ffc107;
+    --whiteColor: #ffffff;
+    --blackColor: #222222;
+    --softGreyColor: #d9f2ee;
+    --darkGreyColor: #a7a7a7;
+    --greyColor: #f5f5f5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    background-color: var(--softGreyColor);
+    color: var(--blackColor);
+}
+
+.container-account {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 50px;
+    background-color: var(--whiteColor);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.box {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h3 {
+    font-size: 1.5rem;
+    color: var(--primaryColor);
+}
+
+text p {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--darkGreyColor);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.field label {
+    font-size: 1rem;
+    color: var(--blackColor);
+}
+
+.input input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid var(--softGreyColor);
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+.input input:focus {
+    border-color: var(--primaryColor);
+    outline: none;
+}
+
+.field .btn {
+    padding: 12px 20px;
+    background-color: var(--primaryColor);
+    color: var(--whiteColor);
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.field .btn:hover {
+    background-color: var(--secondaryColor);
+    color: var(--blackColor);
+}
+
+.field .btn:active {
+    background-color: var(--primaryColor);
+    color: var(--blackColor);
+}
+
+.btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primaryColor);
+    color: var(--whiteColor);
+    font-size: 1.2rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: var(--secondaryColor);
+    color: var(--blackColor);
+}
